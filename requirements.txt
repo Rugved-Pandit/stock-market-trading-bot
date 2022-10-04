@@ -1,0 +1,7 @@
+# PyOpenGL
+# ffmpeg
+!pip install gym[box2d]
+!pip install stable-baselines3[extra]
+!pip install huggingface_sb3
+!pip install pyglet
+!pip install ale-py==0.7.4
