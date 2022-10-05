@@ -12,6 +12,7 @@ from stable_baselines3.common.vec_env import dummy_vec_env
 from env.StockTradingEnv import StockTradingEnv
 
 import pandas as pd
+import matplotlib.pyplot as plt
 
 df = pd.read_csv('./data/ADANIPORTS.csv')
 # df = df.sort_values('Date')
@@ -20,15 +21,46 @@ df = pd.read_csv('./data/ADANIPORTS.csv')
 env = dummy_vec_env.DummyVecEnv([lambda: StockTradingEnv(df)])
 
 model = PPO("MlpPolicy", env, verbose=1)
-model.learn(total_timesteps=20000)
+# model.learn(total_timesteps=20000)
+model.learn(total_timesteps=555555) #2021-02-04 13:07:00+05:30
+# model.learn(total_timesteps=5000) #2021-02-04 13:07:00+05:30
 
 obs = env.reset()
-with open('log4.txt', 'w') as log:
+with open('log10.txt', 'w') as log:
     output = []
-    for i in range(2000):
+    balance = []
+    net_worth = []
+    total_shares_sold = []
+    shares_held = []
+
+    # for i in range(1000):
+    for i in range(650000-555600):
         action, _states = model.predict(obs)
         obs, rewards, done, info = env.step(action)
         renderLog = env.render()
+
         output.extend(renderLog)
+        balance.extend(env.get_attr('balance'))
+        # print(env.get_attr('balance'))
+        net_worth.extend(env.get_attr('net_worth'))
+        total_shares_sold.extend(env.get_attr('total_shares_sold'))
+        shares_held.extend(env.get_attr('shares_held'))
+    
     log.writelines(output)
     log.close()
+    
+    # print(balance)
+    x =  [l for l in range(len(total_shares_sold))]
+    figure, axis = plt.subplots(2, 2)
+    axis[0, 0].plot(x, balance)
+    axis[0, 0].set_title("balance")
+    
+    axis[0, 1].plot(x, shares_held)
+    axis[0, 1].set_title("shares_held")
+    
+    axis[1, 0].plot(x, net_worth)
+    axis[1, 0].set_title("net_worth")
+    
+    axis[1, 1].plot(x, total_shares_sold)
+    axis[1, 1].set_title("total_shares_sold")
+    plt.show()
