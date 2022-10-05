@@ -1,7 +1,13 @@
-7 0-555555 training; 555600-650000 testing; no transaction cost; initial amount 1lakh
-8 0-555555 training; 555600-650000 testing; transaction cost 10rs; initial amount 1lakh
-9 0-555555 training; 555600-650000 testing; transaction cost 10rs; initial amount 1lakh
-10 0-555555 training; 555600-650000 testing; no transaction cost; initial amount 1lakh
-11 0-555555 training; 555600-650000 testing; no transaction cost; initial amount 2k
+ADANIPORTS
+0-555555 training; 555600-650000 testing; no transaction cost; initial amount 1lakh
+
+7 '' initial amount 1lakh
+8 '' transaction cost 10rs; initial amount 1lakh
+9 '' transaction cost 10rs; initial amount 1lakh
+10 '' no transaction cost; initial amount 1lakh
+11 '' no transaction cost; initial amount 2k
 
 12 yesbank '' initial amount 1lakh
+
+13 ADANIPORTS '' initial amount 10k; incorrect scaling
+13 ADANIPORTS '' initial amount 10k; no scaling
