@@ -14,7 +14,7 @@ from env.StockTradingEnv import StockTradingEnv
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df = pd.read_csv('./data/ADANIPORTS.csv')
+df = pd.read_csv('./data/YESBANK.csv')
 # df = df.sort_values('Date')
 
 # The algorithms require a vectorized environment to run
@@ -26,7 +26,7 @@ model.learn(total_timesteps=555555) #2021-02-04 13:07:00+05:30
 # model.learn(total_timesteps=5000) #2021-02-04 13:07:00+05:30
 
 obs = env.reset()
-with open('log10.txt', 'w') as log:
+with open('./logs/log12.txt', 'w') as log:
     output = []
     balance = []
     net_worth = []
@@ -63,4 +63,6 @@ with open('log10.txt', 'w') as log:
     
     axis[1, 1].plot(x, total_shares_sold)
     axis[1, 1].set_title("total_shares_sold")
+
+    plt.savefig('./plots/log12plot.png')
     plt.show()
