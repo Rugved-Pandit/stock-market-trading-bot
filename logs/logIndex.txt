@@ -10,4 +10,9 @@ ADANIPORTS
 12 yesbank '' initial amount 1lakh
 
 13 ADANIPORTS '' initial amount 10k; incorrect scaling
-13 ADANIPORTS '' initial amount 10k; no scaling
+14 ADANIPORTS '' initial amount 10k; no scaling
+
+15 BAJAJFINSV '' initial amount 10k; no scaling
+16 BAJAJFINSV '' initial amount 10k; no scaling; new obs
+17 BAJAJFINSV '' initial amount 10k; no scaling; rsi
+18 ADANIPORTS '' initial amount 10k; no scaling; rsi

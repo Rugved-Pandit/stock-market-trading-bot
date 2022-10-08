@@ -5,3 +5,4 @@
 !pip install huggingface_sb3
 !pip install pyglet
 !pip install ale-py==0.7.4
+!pip install pandas-ta

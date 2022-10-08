@@ -31,7 +31,7 @@ class StockTradingEnv(gym.Env):
 
         # Prices contains the OHCL values for the last five prices
         # self.observation_space = spaces.Box(low=0, high=1, shape=(6, 6), dtype=np.float16)
-        self.observation_space = spaces.Box(low=0, high=1, shape=(6, 6))
+        self.observation_space = spaces.Box(low=-np.inf, high=np.inf, shape=(6, 6)) #balance, close, n.shares, macd, rsi
 
         self.current_step = 0
 
@@ -89,9 +89,11 @@ class StockTradingEnv(gym.Env):
     def _take_action(self, action):
         # Set the current price to a random price within the time step
         # current_price = random.uniform(
-        #     self.df.loc[self.current_step, "Open"], self.df.loc[self.current_step, "Close"])
+        #     self.df.loc[self.current_step, "open"], self.df.loc[self.current_step, "close"])
         
         current_price = self.df.loc[self.current_step, "close"]
+        if current_price == 0:
+            current_price = self.df.loc[self.current_step-1, "close"]
 
         action_type = action[0]
         amount = action[1]
@@ -136,6 +138,7 @@ class StockTradingEnv(gym.Env):
     def step(self, action):
         # print(self.balance)
         # Execute one time step within the environment
+        print(self.current_step)
         old_net_worth = self.net_worth
         self._take_action(action)
 
