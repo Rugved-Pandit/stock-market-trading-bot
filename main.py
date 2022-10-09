@@ -29,7 +29,7 @@ model.learn(total_timesteps=555555) #2021-02-04 13:07:00+05:30
 # model.learn(total_timesteps=50) #2021-02-04 13:07:00+05:30
 
 obs = env.reset()
-with open('./logs/log26.txt', 'w') as log:
+with open('./logs/log30.txt', 'w') as log:
     output = []
     balance = []
     net_worth = []
@@ -78,5 +78,5 @@ with open('./logs/log26.txt', 'w') as log:
     figure.set_figwidth(16)
     figure.set_figheight(9)
 
-    plt.savefig('./plots/log26plot.png')
+    plt.savefig('./plots/log30plot.png')
     plt.show()

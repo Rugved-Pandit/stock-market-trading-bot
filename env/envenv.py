@@ -17,6 +17,8 @@ class EnvEnv(gym.Env):
         self.num_shares = 0
         self.current_step = 40
         self.num_shares_sold = 0
+        self.transaction_cost = 0
+        self.total_transaction_cost = 0
 
         #rsi
         self.rsi = pandas_ta.rsi(df['close'], length=14)
@@ -71,14 +73,20 @@ class EnvEnv(gym.Env):
 
         current_price = self.df.loc[self.current_step-1, "close"]
         
+        self.transaction_cost = 0
+
         #buy
         if action < -0.33:
             percentage_buy = abs(action)
             if current_price ==0:
                 num_buy_possible = 0
             else:
-                num_buy_possible = int(self.balance / current_price)
+                num_buy_possible = int((self.balance-20) / current_price)
             num_buying = int(num_buy_possible * percentage_buy)
+
+            if num_buying >0:
+                self.transaction_cost = min(20, num_buying*current_price*0.03)
+                
             self.num_shares += num_buying
             self.balance -= num_buying*current_price
         
@@ -86,10 +94,16 @@ class EnvEnv(gym.Env):
         elif action > 0.33:
             percentage_sell = action
             num_selling = int(self.num_shares * percentage_sell)
+            if num_selling >0:
+                self.transaction_cost = min(20, num_selling*current_price*0.03)
+                self.num_shares_sold +=1
+
             self.num_shares -= num_selling
             self.balance += num_selling*current_price
-            self.num_shares_sold +=1
         
+        self.balance -= self.transaction_cost
+        self.total_transaction_cost += self.transaction_cost
+
         self.net_worth = self.balance + self.num_shares * current_price
         
         terminated = self.net_worth <=0
@@ -104,7 +118,8 @@ class EnvEnv(gym.Env):
         self.balance = INITIAL_ACCOUNT_BALANCE
         self.net_worth = INITIAL_ACCOUNT_BALANCE
         self.num_shares = 0
-        self.num_transactions = 0
+        self.transaction_cost = 0
+        self.total_transaction_cost = 0
 
         self.current_step = 555600
 
@@ -120,6 +135,8 @@ class EnvEnv(gym.Env):
         output.append('Step: ' + str(self.current_step) + '\n')
         output.append('Balance: ' + str(self.balance) + '\n')
         output.append('Shares held: ' + str(self.num_shares) + '\n')
+        output.append('num_shares_sold: ' + str(self.num_shares_sold) + '\n')
+        output.append('total_transaction_cost: ' + str(self.total_transaction_cost) + '\n')
         output.append('Net worth: ' + str(self.net_worth) + '\n')
         output.append('Profit: ' + str(self.net_worth - INITIAL_ACCOUNT_BALANCE) + '\n')
         output.append('\n')

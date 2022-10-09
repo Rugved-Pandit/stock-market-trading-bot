@@ -25,3 +25,8 @@ ADANIPORTS
 24 ADANIPORTS '' initial amount 10k; new obs: balance, close, n.shares, net_worth, rsi
 25 ADANIPORTS '' initial amount 10k; new obs: balance, close, n.shares, net_worth, rsi, macd, signal
 26 ADANIPORTS '' initial amount 10k; new obs: balance, close, n.shares, rsi, macd, signal
+
+27 ADANIPORTS '' initial amount 10k; transaction cost only in reward
+28 ADANIPORTS '' initial amount 10k; no explanation for these results
+29 ADANIPORTS '' initial amount 10k; deleted cache, previous result likely caused by undeleted cache
+30 ADANIPORTS '' initial amount 10k; transaction cost; same reward
