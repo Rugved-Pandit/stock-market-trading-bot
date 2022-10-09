@@ -15,15 +15,28 @@ class EnvEnv(gym.Env):
         self.balance = INITIAL_ACCOUNT_BALANCE
         self.net_worth = INITIAL_ACCOUNT_BALANCE
         self.num_shares = 0
-        self.current_step = 20
+        self.current_step = 40
         self.num_shares_sold = 0
+
+        #rsi
         self.rsi = pandas_ta.rsi(df['close'], length=14)
+
+        #macd
+        ShortEMA = self.df.close.ewm(span=12, adjust=False).mean()
+        # Calculate the long term exponential moving average (EMA)
+        LongEMA = self.df.close.ewm(span=26, adjust=False).mean()
+        # Calculate the MACD line
+        self.MACD = ShortEMA - LongEMA
+        # Calculate the signal line
+        self.signal = self.MACD.ewm(span=9, adjust=False).mean()
 
         self.isTraining = True
 
         #balance, close, n.shares, macd, rsi
         #balance, close, n.shares, net_worth, rsi
-        self.observation_space = Box(-np.inf, np.inf, shape=(5,))
+        #balance, close, n.shares, net_worth, rsi, macd, signal
+        #balance, close, n.shares, rsi, macd, signal
+        self.observation_space = Box(-np.inf, np.inf, shape=(6,))
 
         # buy - hold - sell
         self.action_space = Box(-1, 1, shape=(1,))
@@ -34,8 +47,10 @@ class EnvEnv(gym.Env):
             self.balance,
             self.df.loc[self.current_step, 'close'],
             self.num_shares,
-            self.net_worth,
-            self.rsi[self.current_step]
+            # self.net_worth,
+            self.rsi[self.current_step],
+            self.MACD[self.current_step],
+            self.signal[self.current_step],
             ])
 
         return obs
@@ -47,7 +62,7 @@ class EnvEnv(gym.Env):
 
         if self.isTraining:
             if self.current_step > 555555:
-                self.current_step = 20
+                self.current_step = 40
         else:
             if self.current_step > len(self.df.loc[:, 'open'].values) -10:
                 self.current_step = 555600
