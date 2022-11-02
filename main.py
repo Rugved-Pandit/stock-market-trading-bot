@@ -2,7 +2,7 @@ import gym
 import json
 import datetime as dt
 
-from stable_baselines3 import PPO, A2C, DDPG, DQN, 
+from stable_baselines3 import PPO, A2C, DDPG, DQN, SAC
 from stable_baselines3.common.vec_env import dummy_vec_env
 
 # from stabl .common.policies import MlpPolicy
