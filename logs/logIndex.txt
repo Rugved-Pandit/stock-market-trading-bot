@@ -30,3 +30,32 @@ ADANIPORTS
 28 ADANIPORTS '' initial amount 10k; no explanation for these results
 29 ADANIPORTS '' initial amount 10k; deleted cache, previous result likely caused by undeleted cache
 30 ADANIPORTS '' initial amount 10k; transaction cost; same reward
+
+31 ADANIPORTS '' initial amount 10k; transaction cost; reward = 1 if profit else 0
+32 ADANIPORTS '' initial amount 10k; transaction cost; reward = 1 if profit else -1
+33 ADANIPORTS '' initial amount 10k; transaction cost; reward = +-exp(new-old net_worth)
+34 ADANIPORTS '' initial amount 10k; transaction cost; reward = +-log(new-old net_worth)
+35 ADANIPORTS '' initial amount 10k; transaction cost; reward = sigmoid(new-old net_worth)
+36 ADANIPORTS '' initial amount 10k; transaction cost; reward = profit
+37 ADANIPORTS '' initial amount 10k; transaction cost; reward = new-old net_worth; new action = 0 1 2
+38 ADANIPORTS '' initial amount 10k; transaction cost; reward = 1 if profit else -1
+39 ADANIPORTS '' initial amount 10k; transaction cost; reward = sigmoid(new-old net_worth)
+40 ADANIPORTS '' initial amount 10k; transaction cost; reward = new-old net_worth; action = -1 0 1; new obs = balance, ohlcv, n.shares, rsi, macd, signal
+41 ADANIPORTS '' initial amount 10k; '' ; new obs = balance, close, volume, n.shares, rsi, macd, signal
+42 ADANIPORTS '' initial amount 10k; '' ; new obs = balance, close, n.shares, rsi, macd
+43 ADANIPORTS '' initial amount 10k; '' ; obs = balance, close, n.shares, rsi, macd, signal
+44 ADANIPORTS '' initial amount 10k; '' ; reward = new -old worth + balance/initial balance *2
+45 ADANIPORTS '' initial amount 10k; '' ; reward = new -old worth; A2C
+46 TCS '' initial amount 10k; '' ; reward = new -old worth; PPO
+
+47 ADANIPORTS '' initial amount 10k; no transaction cost; PPO
+48 ADANIPORTS '' initial amount 10k; A2C
+49 TCS '' initial amount 10k; PPO
+50 YESBANK '' initial amount 10k; PPO
+51 BHARTIARTL '' initial amount 10k; PPO
+52 ONGC '' initial amount 10k; PPO
+53 YESBANK '' initial amount 10k; A2C
+54 YESBANK '' initial amount 10k; transaction cost; action = discrete; DQN
+55 ADANIPORTS '' initial amount 10k; DQN
+56 YESBANK '' initial amount 10k; no transaction cost; DQN
+57 ADANIPORTS '' initial amount 10k; DQN

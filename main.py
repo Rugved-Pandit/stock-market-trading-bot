@@ -2,7 +2,7 @@ import gym
 import json
 import datetime as dt
 
-from stable_baselines3 import PPO
+from stable_baselines3 import PPO, A2C, DDPG, DQN, 
 from stable_baselines3.common.vec_env import dummy_vec_env
 
 # from stabl .common.policies import MlpPolicy
@@ -24,12 +24,12 @@ df = pd.read_csv('./data/ADANIPORTS.csv')
 env = dummy_vec_env.DummyVecEnv([lambda: EnvEnv(df)])
 # env = EnvEnv(df)
 
-model = PPO("MlpPolicy", env, verbose=1)
+model = DQN("MlpPolicy", env, verbose=1)
 model.learn(total_timesteps=555555) #2021-02-04 13:07:00+05:30
 # model.learn(total_timesteps=50) #2021-02-04 13:07:00+05:30
 
 obs = env.reset()
-with open('./logs/log30.txt', 'w') as log:
+with open('./logs/log57.txt', 'w') as log:
     output = []
     balance = []
     net_worth = []
@@ -78,5 +78,5 @@ with open('./logs/log30.txt', 'w') as log:
     figure.set_figwidth(16)
     figure.set_figheight(9)
 
-    plt.savefig('./plots/log30plot.png')
+    plt.savefig('./plots/log57plot.png')
     plt.show()

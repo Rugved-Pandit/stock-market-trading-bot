@@ -1,5 +1,5 @@
 import gym
-from gym.spaces import Box
+from gym.spaces import Box, Discrete
 import numpy as np
 import pandas_ta
 
@@ -41,7 +41,8 @@ class EnvEnv(gym.Env):
         self.observation_space = Box(-np.inf, np.inf, shape=(6,))
 
         # buy - hold - sell
-        self.action_space = Box(-1, 1, shape=(1,))
+        # self.action_space = Box(-1, 1, shape=(1,))
+        self.action_space = Discrete(3)
 
 
     def _get_obs(self):
@@ -57,8 +58,72 @@ class EnvEnv(gym.Env):
 
         return obs
 
-
+    #DISCRETE ACTION
     def step(self, action):
+        self.current_step +=1
+        # print(self.current_step)
+
+        if self.isTraining:
+            if self.current_step > 555555:
+                self.current_step = 40
+        else:
+            if self.current_step > len(self.df.loc[:, 'open'].values) -10:
+                self.current_step = 555600
+
+        old_net_worth = self.net_worth
+
+        current_price = self.df.loc[self.current_step-1, "close"]
+        
+        self.transaction_cost = 0
+
+        #buy
+        if action ==0:
+            if current_price ==0:
+                is_buy_possible = False
+            else:
+                is_buy_possible = ((self.balance-20) - current_price) >0
+
+            if is_buy_possible:
+                self.transaction_cost = min(20, current_price*0.03)
+                
+                self.num_shares += 1
+                self.balance -= current_price
+        
+        #sell
+        elif action ==2 and self.num_shares>0 :
+            self.transaction_cost = min(20, current_price*0.03)
+            self.num_shares_sold +=1
+
+            self.num_shares -= 1
+            self.balance += current_price
+        
+        #NO TRANSACTION COST
+        self.transaction_cost = 0
+        
+        self.balance -= self.transaction_cost
+        self.total_transaction_cost += self.transaction_cost
+
+        self.net_worth = self.balance + self.num_shares * current_price
+        
+        terminated = self.net_worth <=0
+
+        reward = self.net_worth - old_net_worth
+        # reward = 1 if ((self.net_worth - old_net_worth) > 0 ) else -1
+        # if self.net_worth - old_net_worth >1:
+        #     reward = math.log(self.net_worth - old_net_worth)
+        # elif self.net_worth - old_net_worth <-1:
+        #     reward = -math.log(old_net_worth - self.net_worth)
+        # else:
+        #     reward = old_net_worth - self.net_worth
+        # reward = 1/(1 + np.exp(old_net_worth - self.net_worth))
+        # reward = self.net_worth-INITIAL_ACCOUNT_BALANCE
+        
+        observation = self._get_obs()
+
+        return observation, reward, terminated, {}
+
+
+    def step_cont_action(self, action):
         self.current_step +=1
         # print(self.current_step)
 
@@ -96,11 +161,14 @@ class EnvEnv(gym.Env):
             num_selling = int(self.num_shares * percentage_sell)
             if num_selling >0:
                 self.transaction_cost = min(20, num_selling*current_price*0.03)
-                self.num_shares_sold +=1
+                self.num_shares_sold +=num_selling
 
             self.num_shares -= num_selling
             self.balance += num_selling*current_price
         
+        #NO TRANSACTION COST
+        self.transaction_cost = 0
+
         self.balance -= self.transaction_cost
         self.total_transaction_cost += self.transaction_cost
 
@@ -120,6 +188,7 @@ class EnvEnv(gym.Env):
         self.num_shares = 0
         self.transaction_cost = 0
         self.total_transaction_cost = 0
+        self.num_shares_sold = 0
 
         self.current_step = 555600
 
