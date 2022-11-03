@@ -122,8 +122,8 @@ class EnvEnv(gym.Env):
 
         return observation, reward, terminated, {}
 
-
-    def step_cont_action(self, action):
+    #CONTINUOUS ACTION
+    def step_cont(self, action):
         self.current_step +=1
         # print(self.current_step)
 

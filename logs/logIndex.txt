@@ -7,7 +7,7 @@ ADANIPORTS
 10 '' no transaction cost; initial amount 1lakh
 11 '' no transaction cost; initial amount 2k
 
-12 yesbank '' initial amount 1lakh
+12 YESBANK '' initial amount 1lakh
 
 13 ADANIPORTS '' initial amount 10k; incorrect scaling
 14 ADANIPORTS '' initial amount 10k; no scaling
@@ -59,3 +59,9 @@ ADANIPORTS
 55 ADANIPORTS '' initial amount 10k; DQN
 56 YESBANK '' initial amount 10k; no transaction cost; DQN
 57 ADANIPORTS '' initial amount 10k; DQN
+-- ADANIPORTS '' initial amount 10k; action = continuous; SAC; gives valueError found tensor nan
+-- YESBANK '' initial amount 10k; SAC; same error
+-- YESBANK '' initial amount 10k; TD3; didn't complete training after 30 min
+58 YESBANK '' initial amount 10k; PPO Custom network 32 32
+59 YESBANK '' initial amount 10k; PPO Custom network 64 32
+60 ONGC '' initial amount 10k; DQN

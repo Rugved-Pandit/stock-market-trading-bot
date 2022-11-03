@@ -1,9 +1,12 @@
 import gym
 import json
 import datetime as dt
+import numpy as np
+import torch
 
-from stable_baselines3 import PPO, A2C, DDPG, DQN, SAC
+from stable_baselines3 import PPO, A2C, DDPG, DQN, SAC, TD3
 from stable_baselines3.common.vec_env import dummy_vec_env
+from stable_baselines3.common.noise import NormalActionNoise, OrnsteinUhlenbeckActionNoise
 
 # from stabl .common.policies import MlpPolicy
 # from stable_baselines.common.vec_env import DummyVecEnv
@@ -16,7 +19,7 @@ import matplotlib.pyplot as plt
 
 from env.envenv import EnvEnv
 
-df = pd.read_csv('./data/ADANIPORTS.csv')
+df = pd.read_csv('./data/ONGC.csv')
 # df = df.sort_values('Date')
 
 # The algorithms require a vectorized environment to run
@@ -24,12 +27,25 @@ df = pd.read_csv('./data/ADANIPORTS.csv')
 env = dummy_vec_env.DummyVecEnv([lambda: EnvEnv(df)])
 # env = EnvEnv(df)
 
+# # The noise objects for TD3
+# n_actions = env.action_space.shape[-1]
+# action_noise = NormalActionNoise(mean=np.zeros(n_actions), sigma=0.1 * np.ones(n_actions))
+# model = TD3("MlpPolicy", env, action_noise=action_noise, verbose=1)
+
+# model = SAC("MlpPolicy", env, verbose=1)
+
+# Custom actor (pi) and value function (vf) networks of two layers of size 32 each with Relu activation function
+# policy_kwargs = dict(activation_fn=torch.nn.ReLU, net_arch=[dict(pi=[64, 32], vf=[64, 32])])
+# Create the agent
+# model = PPO("MlpPolicy", env, policy_kwargs=policy_kwargs, verbose=1)
+
 model = DQN("MlpPolicy", env, verbose=1)
+
 model.learn(total_timesteps=555555) #2021-02-04 13:07:00+05:30
 # model.learn(total_timesteps=50) #2021-02-04 13:07:00+05:30
 
 obs = env.reset()
-with open('./logs/log57.txt', 'w') as log:
+with open('./logs/log60.txt', 'w') as log:
     output = []
     balance = []
     net_worth = []
@@ -78,5 +94,5 @@ with open('./logs/log57.txt', 'w') as log:
     figure.set_figwidth(16)
     figure.set_figheight(9)
 
-    plt.savefig('./plots/log57plot.png')
+    plt.savefig('./plots/log60plot.png')
     plt.show()
