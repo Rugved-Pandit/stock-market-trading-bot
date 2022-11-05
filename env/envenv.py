@@ -41,8 +41,8 @@ class EnvEnv(gym.Env):
         self.observation_space = Box(-np.inf, np.inf, shape=(6,))
 
         # buy - hold - sell
-        # self.action_space = Box(-1, 1, shape=(1,))
-        self.action_space = Discrete(3)
+        self.action_space = Box(-1, 1, shape=(1,))
+        # self.action_space = Discrete(3)
 
 
     def _get_obs(self):
@@ -59,7 +59,7 @@ class EnvEnv(gym.Env):
         return obs
 
     #DISCRETE ACTION
-    def step(self, action):
+    def step_discrete(self, action):
         self.current_step +=1
         # print(self.current_step)
 
@@ -123,7 +123,7 @@ class EnvEnv(gym.Env):
         return observation, reward, terminated, {}
 
     #CONTINUOUS ACTION
-    def step_cont(self, action):
+    def step(self, action):
         self.current_step +=1
         # print(self.current_step)
 

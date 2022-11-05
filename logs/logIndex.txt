@@ -65,3 +65,6 @@ ADANIPORTS
 58 YESBANK '' initial amount 10k; PPO Custom network 32 32
 59 YESBANK '' initial amount 10k; PPO Custom network 64 32
 60 ONGC '' initial amount 10k; DQN
+61 AUROPHARMA '' initial amount 10k; PPO
+62 HEROMOTOCO '' initial amount 10k; PPO
+63 IGL '' initial amount 10k; PPO
