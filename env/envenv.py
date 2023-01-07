@@ -2,6 +2,7 @@ import gym
 from gym.spaces import Box, Discrete
 import numpy as np
 import pandas_ta
+import matplotlib.pyplot as plt
 
 
 INITIAL_ACCOUNT_BALANCE = 10000
@@ -19,6 +20,10 @@ class EnvEnv(gym.Env):
         self.num_shares_sold = 0
         self.transaction_cost = 0
         self.total_transaction_cost = 0
+
+        self.training_output = []
+        self.training_rewards = []
+        self.training_steps = []
 
         #rsi
         self.rsi = pandas_ta.rsi(df['close'], length=14)
@@ -167,9 +172,8 @@ class EnvEnv(gym.Env):
             self.balance += num_selling*current_price
         
         #NO TRANSACTION COST
-        self.transaction_cost = 0
+        # self.balance -= self.transaction_cost
 
-        self.balance -= self.transaction_cost
         self.total_transaction_cost += self.transaction_cost
 
         self.net_worth = self.balance + self.num_shares * current_price
@@ -179,6 +183,20 @@ class EnvEnv(gym.Env):
         reward = self.net_worth - old_net_worth
         
         observation = self._get_obs()
+
+        #trying logging
+        self.training_output.append('Step: ' + str(self.current_step) + '\n')
+        self.training_output.append('Action: ' + str(action) + '\n')
+        self.training_output.append('Balance: ' + str(self.balance) + '\n')
+        self.training_output.append('Shares held: ' + str(self.num_shares) + '\n')
+        self.training_output.append('num_shares_sold: ' + str(self.num_shares_sold) + '\n')
+        self.training_output.append('total_transaction_cost: ' + str(self.total_transaction_cost) + '\n')
+        self.training_output.append('Net worth: ' + str(self.net_worth) + '\n')
+        self.training_output.append('Profit: ' + str(self.net_worth - INITIAL_ACCOUNT_BALANCE) + '\n')
+        self.training_output.append('\n')
+
+        self.training_rewards.append(str(reward)+'\n')
+        self.training_steps.append(str(self.current_step)+'\n')
 
         return observation, reward, terminated, {}
 
@@ -195,6 +213,32 @@ class EnvEnv(gym.Env):
         observation = self._get_obs()
 
         self.isTraining = False
+
+        with open('./logs/log64training.txt', 'w') as log:
+            log.writelines(self.training_output)
+            log.close()
+        
+        with open('./logs/log64training-rewards.txt', 'w') as log:
+            log.writelines(self.training_rewards)
+            log.close()
+        
+        with open('./logs/log64training-steps.txt', 'w') as log:
+            log.writelines(self.training_steps)
+            log.close()
+        
+        x =  [l for l in range(len(self.training_rewards))]
+        plt.plot(x, self.training_rewards)
+        plt.figure(figsize=(16,9))
+        plt.title('rewards')
+        plt.savefig('./plots/log64training-rewards-plot.png')
+        plt.show()
+
+        x =  [l for l in range(len(self.training_steps))]
+        plt.plot(x, self.training_steps)
+        plt.figure(figsize=(16,9))
+        plt.title('steps')
+        plt.savefig('./plots/log64training-steps-plot.png')
+        plt.show()
 
         return observation
 

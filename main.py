@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 
 from env.envenv import EnvEnv
 
-df = pd.read_csv('./data/IGL.csv')
+df = pd.read_csv('./data/ADANIPORTS.csv')
 # df = df.sort_values('Date')
 
 # The algorithms require a vectorized environment to run
@@ -45,7 +45,7 @@ model.learn(total_timesteps=555555) #2021-02-04 13:07:00+05:30
 # model.learn(total_timesteps=50) #2021-02-04 13:07:00+05:30
 
 obs = env.reset()
-with open('./logs/log63.txt', 'w') as log:
+with open('./logs/log64.txt', 'w') as log:
     output = []
     balance = []
     net_worth = []
@@ -94,5 +94,5 @@ with open('./logs/log63.txt', 'w') as log:
     figure.set_figwidth(16)
     figure.set_figheight(9)
 
-    plt.savefig('./plots/log63plot.png')
+    plt.savefig('./plots/log64plot.png')
     plt.show()

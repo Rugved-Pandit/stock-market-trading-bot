@@ -68,3 +68,4 @@ ADANIPORTS
 61 AUROPHARMA '' initial amount 10k; PPO
 62 HEROMOTOCO '' initial amount 10k; PPO
 63 IGL '' initial amount 10k; PPO
+64 ADANIPORTS '' initial amount 10k; no transaction cost; PPO
