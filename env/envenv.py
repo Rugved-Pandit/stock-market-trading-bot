@@ -132,16 +132,20 @@ class EnvEnv(gym.Env):
         self.current_step +=1
         # print(self.current_step)
 
-        if self.isTraining:
-            if self.current_step > 555555:
-                self.current_step = 40
-        else:
-            if self.current_step > len(self.df.loc[:, 'open'].values) -10:
-                self.current_step = 555600
+        # if self.isTraining:
+        #     if self.current_step > 555555:
+        #         self.current_step = 40
+        #         print('training')
+        # else:
+        #     if self.current_step > len(self.df.loc[:, 'open'].values) -10:
+        #         self.current_step = 555600
 
         old_net_worth = self.net_worth
 
         current_price = self.df.loc[self.current_step-1, "close"]
+        
+        # print(self.current_step)
+        # print(self.df.loc[self.current_step-1, "date"])
         
         self.transaction_cost = 0
 
@@ -208,37 +212,37 @@ class EnvEnv(gym.Env):
         self.total_transaction_cost = 0
         self.num_shares_sold = 0
 
-        self.current_step = 555600
+        # self.current_step = 555600
 
         observation = self._get_obs()
 
-        self.isTraining = False
+        # self.isTraining = False
 
-        with open('./logs/log64training.txt', 'w') as log:
+        with open('./logs/log65training.txt', 'w') as log:
             log.writelines(self.training_output)
             log.close()
         
-        with open('./logs/log64training-rewards.txt', 'w') as log:
+        with open('./logs/log65training-rewards.txt', 'w') as log:
             log.writelines(self.training_rewards)
             log.close()
         
-        with open('./logs/log64training-steps.txt', 'w') as log:
+        with open('./logs/log65training-steps.txt', 'w') as log:
             log.writelines(self.training_steps)
             log.close()
         
-        x =  [l for l in range(len(self.training_rewards))]
-        plt.plot(x, self.training_rewards)
-        plt.figure(figsize=(16,9))
-        plt.title('rewards')
-        plt.savefig('./plots/log64training-rewards-plot.png')
-        plt.show()
+        # x =  [l for l in range(len(self.training_rewards))]
+        # plt.plot(x, self.training_rewards)
+        # plt.figure(figsize=(16,9))
+        # plt.title('rewards')
+        # plt.savefig('./plots/log65training-rewards-plot.png')
+        # plt.show()
 
-        x =  [l for l in range(len(self.training_steps))]
-        plt.plot(x, self.training_steps)
-        plt.figure(figsize=(16,9))
-        plt.title('steps')
-        plt.savefig('./plots/log64training-steps-plot.png')
-        plt.show()
+        # x =  [l for l in range(len(self.training_steps))]
+        # plt.plot(x, self.training_steps)
+        # plt.figure(figsize=(16,9))
+        # plt.title('steps')
+        # plt.savefig('./plots/log65training-steps-plot.png')
+        # plt.show()
 
         return observation
 

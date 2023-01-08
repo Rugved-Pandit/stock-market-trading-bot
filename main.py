@@ -45,7 +45,11 @@ model.learn(total_timesteps=555555) #2021-02-04 13:07:00+05:30
 # model.learn(total_timesteps=50) #2021-02-04 13:07:00+05:30
 
 obs = env.reset()
-with open('./logs/log64.txt', 'w') as log:
+
+# print('obs')
+# print(obs)
+
+with open('./logs/log65.txt', 'w') as log:
     output = []
     balance = []
     net_worth = []
@@ -53,9 +57,10 @@ with open('./logs/log64.txt', 'w') as log:
     shares_held = []
 
     num_shares_sold = []
+    rewards_list = []
 
-    # for i in range(10):
     for i in range(650000-555600):
+    # for i in range(10):
         action, _states = model.predict(obs)
         obs, rewards, done, info = env.step(action)
         renderLog = env.render()
@@ -69,6 +74,8 @@ with open('./logs/log64.txt', 'w') as log:
 
         num_shares_sold.extend(env.get_attr('num_shares_sold'))
         shares_held.extend(env.get_attr('num_shares'))
+
+        rewards_list.append(rewards)
     
     log.writelines(output)
     log.close()
@@ -94,5 +101,16 @@ with open('./logs/log64.txt', 'w') as log:
     figure.set_figwidth(16)
     figure.set_figheight(9)
 
-    plt.savefig('./plots/log64plot.png')
+    plt.savefig('./plots/log65plot.png')
     plt.show()
+
+# with open('./logs/log65training-rewards.txt', 'w') as log:
+#     log.writelines(rewards_list)
+#     log.close()
+
+x =  [l for l in range(len(rewards_list))]
+plt.plot(x, rewards_list)
+plt.figure(figsize=(16,9))
+plt.title('rewards')
+plt.savefig('./plots/log65-rewards-plot.png')
+plt.show()
