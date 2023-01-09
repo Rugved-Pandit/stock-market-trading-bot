@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 
 from env.envenv import EnvEnv
 
-df = pd.read_csv('./data/ADANIPORTS.csv')
+df = pd.read_csv('./data/YESBANK.csv')
 # df = df.sort_values('Date')
 
 # The algorithms require a vectorized environment to run
@@ -49,7 +49,7 @@ obs = env.reset()
 # print('obs')
 # print(obs)
 
-with open('./logs/log65.txt', 'w') as log:
+with open('./logs/log67.txt', 'w') as log:
     output = []
     balance = []
     net_worth = []
@@ -58,9 +58,10 @@ with open('./logs/log65.txt', 'w') as log:
 
     num_shares_sold = []
     rewards_list = []
+    actions_list = []
 
-    for i in range(650000-555600):
     # for i in range(10):
+    for i in range(650000-555600):
         action, _states = model.predict(obs)
         obs, rewards, done, info = env.step(action)
         renderLog = env.render()
@@ -75,7 +76,9 @@ with open('./logs/log65.txt', 'w') as log:
         num_shares_sold.extend(env.get_attr('num_shares_sold'))
         shares_held.extend(env.get_attr('num_shares'))
 
-        rewards_list.append(rewards)
+        rewards_list.append(str(rewards[0]) + '\n')
+        actions_list.append(str(action[0][0]) + '\n')
+
     
     log.writelines(output)
     log.close()
@@ -101,16 +104,13 @@ with open('./logs/log65.txt', 'w') as log:
     figure.set_figwidth(16)
     figure.set_figheight(9)
 
-    plt.savefig('./plots/log65plot.png')
+    plt.savefig('./plots/log67plot.png')
     plt.show()
 
-# with open('./logs/log65training-rewards.txt', 'w') as log:
-#     log.writelines(rewards_list)
-#     log.close()
+with open('./logs/log67rewards.txt', 'w') as log:
+    log.writelines(rewards_list)
+    log.close()
 
-x =  [l for l in range(len(rewards_list))]
-plt.plot(x, rewards_list)
-plt.figure(figsize=(16,9))
-plt.title('rewards')
-plt.savefig('./plots/log65-rewards-plot.png')
-plt.show()
+with open('./logs/log67actions.txt', 'w') as log:
+    log.writelines(actions_list)
+    log.close()

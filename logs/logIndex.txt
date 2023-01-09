@@ -69,3 +69,7 @@ ADANIPORTS
 62 HEROMOTOCO '' initial amount 10k; PPO
 63 IGL '' initial amount 10k; PPO
 64 ADANIPORTS '' initial amount 10k; no transaction cost; PPO
+
+65 ADANIPORTS '' initial amount 10k; no transaction cost; PPO; fixed starting timestamp
+66 ADANIPORTS '' initial amount 100k; no transaction cost; PPO
+67 YESBANK '' initial amount 100k; no transaction cost; PPO

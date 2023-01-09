@@ -5,7 +5,7 @@ import pandas_ta
 import matplotlib.pyplot as plt
 
 
-INITIAL_ACCOUNT_BALANCE = 10000
+INITIAL_ACCOUNT_BALANCE = 100000
 
 class EnvEnv(gym.Env):
     metadata = {"render_modes": ["human"]}
@@ -24,6 +24,7 @@ class EnvEnv(gym.Env):
         self.training_output = []
         self.training_rewards = []
         self.training_steps = []
+        self.training_actions = []
 
         #rsi
         self.rsi = pandas_ta.rsi(df['close'], length=14)
@@ -190,7 +191,7 @@ class EnvEnv(gym.Env):
 
         #trying logging
         self.training_output.append('Step: ' + str(self.current_step) + '\n')
-        self.training_output.append('Action: ' + str(action) + '\n')
+        self.training_output.append('Action: ' + str(action[0]) + '\n')
         self.training_output.append('Balance: ' + str(self.balance) + '\n')
         self.training_output.append('Shares held: ' + str(self.num_shares) + '\n')
         self.training_output.append('num_shares_sold: ' + str(self.num_shares_sold) + '\n')
@@ -201,6 +202,7 @@ class EnvEnv(gym.Env):
 
         self.training_rewards.append(str(reward)+'\n')
         self.training_steps.append(str(self.current_step)+'\n')
+        self.training_actions.append(str(action[0]) + '\n')
 
         return observation, reward, terminated, {}
 
@@ -218,31 +220,17 @@ class EnvEnv(gym.Env):
 
         # self.isTraining = False
 
-        with open('./logs/log65training.txt', 'w') as log:
+        with open('./logs/log67training.txt', 'w') as log:
             log.writelines(self.training_output)
             log.close()
         
-        with open('./logs/log65training-rewards.txt', 'w') as log:
+        with open('./logs/log67training-rewards.txt', 'w') as log:
             log.writelines(self.training_rewards)
             log.close()
-        
-        with open('./logs/log65training-steps.txt', 'w') as log:
-            log.writelines(self.training_steps)
-            log.close()
-        
-        # x =  [l for l in range(len(self.training_rewards))]
-        # plt.plot(x, self.training_rewards)
-        # plt.figure(figsize=(16,9))
-        # plt.title('rewards')
-        # plt.savefig('./plots/log65training-rewards-plot.png')
-        # plt.show()
 
-        # x =  [l for l in range(len(self.training_steps))]
-        # plt.plot(x, self.training_steps)
-        # plt.figure(figsize=(16,9))
-        # plt.title('steps')
-        # plt.savefig('./plots/log65training-steps-plot.png')
-        # plt.show()
+        with open('./logs/log67training-actions.txt', 'w') as log:
+            log.writelines(self.training_actions)
+            log.close()
 
         return observation
 
