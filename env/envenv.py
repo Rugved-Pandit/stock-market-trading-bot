@@ -235,15 +235,15 @@ class EnvEnv(gym.Env):
 
         # self.isTraining = False
 
-        with open('./logs/log75training.txt', 'w') as log:
+        with open('./logs/log76training.txt', 'w') as log:
             log.writelines(self.training_output)
             log.close()
         
-        with open('./logs/log75training-rewards.txt', 'w') as log:
+        with open('./logs/log76training-rewards.txt', 'w') as log:
             log.writelines(self.training_rewards)
             log.close()
 
-        with open('./logs/log75training-actions.txt', 'w') as log:
+        with open('./logs/log76training-actions.txt', 'w') as log:
             log.writelines(self.training_actions)
             log.close()
 

@@ -39,13 +39,13 @@ env = dummy_vec_env.DummyVecEnv([lambda: EnvEnv(df)])
 # Create the agent
 # model = PPO("MlpPolicy", env, policy_kwargs=policy_kwargs, verbose=1)
 
-model = PPO("MlpPolicy", env, verbose=1, seed=666)
+model = PPO("MlpPolicy", env, verbose=1, seed=777)
 
 model.learn(total_timesteps=555555) #2021-02-04 13:07:00+05:30
 # model.learn(total_timesteps=50) #2021-02-04 13:07:00+05:30
 
-model.save('./save/model75')
-# model = PPO.load('./save/model75')
+model.save('./save/model76')
+# model = PPO.load('./save/model76')
 
 obs = env.reset()
 
@@ -53,7 +53,7 @@ obs = env.reset()
 # print(obs)
 
 
-with open('./logs/log75.txt', 'w') as log:
+with open('./logs/log76.txt', 'w') as log:
     output = []
     balance = []
     net_worth = []
@@ -108,13 +108,13 @@ with open('./logs/log75.txt', 'w') as log:
     figure.set_figwidth(16)
     figure.set_figheight(9)
 
-    plt.savefig('./plots/log75plot.png')
+    plt.savefig('./plots/log76plot.png')
     plt.show()
 
-with open('./logs/log75rewards.txt', 'w') as log:
+with open('./logs/log76rewards.txt', 'w') as log:
     log.writelines(rewards_list)
     log.close()
 
-with open('./logs/log75actions.txt', 'w') as log:
+with open('./logs/log76actions.txt', 'w') as log:
     log.writelines(actions_list)
     log.close()

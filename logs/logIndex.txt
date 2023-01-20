@@ -81,3 +81,4 @@ ADANIPORTS
 73 YESBANK '' initial amount 100k; PPO; no transaction cost; no e greedy; reward = new - old net worth; saving model
 74 YESBANK '' initial amount 100k; PPO; no transaction cost; no e greedy; reward = new - old net worth; saving model, seed=666
 75 YESBANK '' initial amount 100k; PPO; no transaction cost; no e greedy; reward = new - old net worth; saving model, seed=666
+76 YESBANK '' initial amount 100k; PPO; no transaction cost; no e greedy; reward = new - old net worth; saving model, seed=777
