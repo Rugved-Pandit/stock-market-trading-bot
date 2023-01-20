@@ -71,5 +71,13 @@ ADANIPORTS
 64 ADANIPORTS '' initial amount 10k; no transaction cost; PPO
 
 65 ADANIPORTS '' initial amount 10k; no transaction cost; PPO; fixed starting timestamp
-66 ADANIPORTS '' initial amount 100k; no transaction cost; PPO
-67 YESBANK '' initial amount 100k; no transaction cost; PPO
+66 ADANIPORTS '' initial amount 100k; transaction cost; PPO
+67 YESBANK '' initial amount 100k; PPO
+68 ADANIPORTS '' initial amount 100k; PPO
+69 ADANIPORTS '' initial amount 100k; PPO; e greedy
+70 ADANIPORTS '' initial amount 100k; PPO; reward = self.net_worth - old_net_worth - self.transaction_cost
+71 ADANIPORTS '' initial amount 100k; PPO; no transaction cost; e greedy
+72 YESBANK '' initial amount 100k; PPO; no transaction cost; no e greedy;
+73 YESBANK '' initial amount 100k; PPO; no transaction cost; no e greedy; reward = new - old net worth; saving model
+74 YESBANK '' initial amount 100k; PPO; no transaction cost; no e greedy; reward = new - old net worth; saving model, seed=666
+75 YESBANK '' initial amount 100k; PPO; no transaction cost; no e greedy; reward = new - old net worth; saving model, seed=666

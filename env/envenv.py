@@ -3,6 +3,7 @@ from gym.spaces import Box, Discrete
 import numpy as np
 import pandas_ta
 import matplotlib.pyplot as plt
+import random
 
 
 INITIAL_ACCOUNT_BALANCE = 100000
@@ -20,6 +21,10 @@ class EnvEnv(gym.Env):
         self.num_shares_sold = 0
         self.transaction_cost = 0
         self.total_transaction_cost = 0
+
+        self.exploration_rate = 1
+        self.exploration_rate_min = 0.01
+        self.exploration_rate_decay = 0.001
 
         self.training_output = []
         self.training_rewards = []
@@ -130,6 +135,7 @@ class EnvEnv(gym.Env):
 
     #CONTINUOUS ACTION
     def step(self, action):
+        action = action[0]
         self.current_step +=1
         # print(self.current_step)
 
@@ -149,6 +155,14 @@ class EnvEnv(gym.Env):
         # print(self.df.loc[self.current_step-1, "date"])
         
         self.transaction_cost = 0
+
+        # # EXPLORATION EXPLOITATION
+        # exploration_rate_threshold = random.uniform(0, 1)
+        # if exploration_rate_threshold > self.exploration_rate:
+        #     action = random.uniform(-1, 1)
+        
+        # # Exploration rate decay
+        # self.exploration_rate = self.exploration_rate_min + (1 - self.exploration_rate_min) * np.exp(-self.exploration_rate_decay * self.current_step / 100)
 
         #buy
         if action < -0.33:
@@ -176,7 +190,7 @@ class EnvEnv(gym.Env):
             self.num_shares -= num_selling
             self.balance += num_selling*current_price
         
-        #NO TRANSACTION COST
+        #TRANSACTION COST
         # self.balance -= self.transaction_cost
 
         self.total_transaction_cost += self.transaction_cost
@@ -185,13 +199,14 @@ class EnvEnv(gym.Env):
         
         terminated = self.net_worth <=0
 
+        # reward = self.net_worth - old_net_worth - self.transaction_cost
         reward = self.net_worth - old_net_worth
         
         observation = self._get_obs()
 
         #trying logging
         self.training_output.append('Step: ' + str(self.current_step) + '\n')
-        self.training_output.append('Action: ' + str(action[0]) + '\n')
+        self.training_output.append('Action: ' + str(action) + '\n')
         self.training_output.append('Balance: ' + str(self.balance) + '\n')
         self.training_output.append('Shares held: ' + str(self.num_shares) + '\n')
         self.training_output.append('num_shares_sold: ' + str(self.num_shares_sold) + '\n')
@@ -202,7 +217,7 @@ class EnvEnv(gym.Env):
 
         self.training_rewards.append(str(reward)+'\n')
         self.training_steps.append(str(self.current_step)+'\n')
-        self.training_actions.append(str(action[0]) + '\n')
+        self.training_actions.append(str(action) + '\n')
 
         return observation, reward, terminated, {}
 
@@ -220,15 +235,15 @@ class EnvEnv(gym.Env):
 
         # self.isTraining = False
 
-        with open('./logs/log67training.txt', 'w') as log:
+        with open('./logs/log75training.txt', 'w') as log:
             log.writelines(self.training_output)
             log.close()
         
-        with open('./logs/log67training-rewards.txt', 'w') as log:
+        with open('./logs/log75training-rewards.txt', 'w') as log:
             log.writelines(self.training_rewards)
             log.close()
 
-        with open('./logs/log67training-actions.txt', 'w') as log:
+        with open('./logs/log75training-actions.txt', 'w') as log:
             log.writelines(self.training_actions)
             log.close()
 
