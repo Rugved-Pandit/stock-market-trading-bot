@@ -1,0 +1,8 @@
+Step: 40
+Balance: 98169.23449439618
+Shares held: 0.0
+num_shares_sold: 203.5085520804577
+total_transaction_cost: 1812.7833279814395
+Net worth: 98169.23449439618
+Profit: -1830.7655056038202
+
