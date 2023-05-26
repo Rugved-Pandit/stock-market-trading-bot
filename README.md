@@ -1,1 +1,3 @@
 # stock-market-trading-bot
+
+In this study, Reinforcement Learning (RL) techniques are used to develop trading strategies for the stock market. Conventional trading strategies rely on human intuition and the examination of historical data to make forecasts, whereas RL agents can automatically learn the best trading strategies through market interaction. The Proximal Policy Gradient (PPO) agent is used in this paper to produce trading policies using real-world stock market data. The tests covered in the paper are conducted on the notoriously turbulent Indian intraday market. The findings of this study can be helpful to financial institutions, RL researchers, and those interested in the use of RL approaches for stock trading.
