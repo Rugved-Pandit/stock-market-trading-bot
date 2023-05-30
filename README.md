@@ -54,9 +54,9 @@ The environment utilized for training the agents comprises several financial tec
 
 Continuous learning methodology was utilized to train the agents over historical stock data for which technical indicators were added. The way the agent learnt in the environment is depicted below: 
 
-![image](https://drive.google.com/uc?export=view&id=1GnIky4XtkFTblo30DQbTSUSIbYIyaeXQ)
+<!-- ![image](https://drive.google.com/uc?export=view&id=1GnIky4XtkFTblo30DQbTSUSIbYIyaeXQ) -->
 
-<!-- <a href="https://drive.google.com/uc?export=view&id=1GnIky4XtkFTblo30DQbTSUSIbYIyaeXQ"><img src="https://drive.google.com/uc?export=view&id=1GnIky4XtkFTblo30DQbTSUSIbYIyaeXQ" style="width: 650px; max-width: 100%; height: auto" title="Stock Training Process" /> -->
+<a href="https://drive.google.com/uc?export=view&id=1GnIky4XtkFTblo30DQbTSUSIbYIyaeXQ"><img src="https://drive.google.com/uc?export=view&id=1GnIky4XtkFTblo30DQbTSUSIbYIyaeXQ" style="width: 150px; max-width: 100%; height: auto" title="Stock Training Process" />
 
 Whilst performing the training process it was observed that the agent would often get stuck in local minima and as a result would lead to stagnation. This adversely affects trading performance and the ability of the agent to learn effectively. The solution to the stagnation problem is two-fold, the first step being to add random steps to increase exploration. Manually increasing exploration of the model ensures the model does not stagnate and learns more. This was employed by adding random steps at a rate of 5% per step taken during training. The second way to combat the stagnation problem was to reset the environment every 100,000 steps, which includes resetting the current balance, net worth and shares held. These two methods acting together ensured the agent constantly kept learning.
 
@@ -70,7 +70,7 @@ Whilst performing the training process it was observed that the agent would ofte
 
 The models created were tested with different environments and on different stocks in the Indian Stock Market. 
 
-![image](https://drive.google.com/uc?export=view&id=10PtukdCYJgu6bl4iXnlFHXMd-yre2Sep)
+![Results](https://drive.google.com/uc?export=view&id=10PtukdCYJgu6bl4iXnlFHXMd-yre2Sep)
 
 The figure above tracks the movement of net worth, total return and savings over the course of February 2021 till February 2022 for the INFY stock. The total return is calculated by adding up the net worth and saving variables as mentioned in the methodology. The total result sees a consistent growth over the months returning a final cumulative return of 30.61%. The initial invested amount was 100,000 INR, after performing the backtesting trades for a year the final observed values for net worth and savings were 89,396 and 40,977 respectively, leading to a total return of 130,613 INR. 
 
